@@ -1,0 +1,6 @@
+{
+  "name": "Senyor Robot - Generador de Veu",
+  "description": "Clonador de text a veu (Text-to-Speech) connectat directament a l'API d'ElevenLabs amb la veu de Senyor Robot en català.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
