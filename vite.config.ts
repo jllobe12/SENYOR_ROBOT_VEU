@@ -5,7 +5,7 @@ import {defineConfig} from 'vite';
 
 export default defineConfig(() => {
   return {
-    base: '/SENYOR_ROBOT_VEU/',
+    base: './', // <--- CANVIA-HO A AIXÒ! Rutes relatives per evitar duplicats
     plugins: [react(), tailwindcss()],
     resolve: {
       alias: {
@@ -13,7 +13,7 @@ export default defineConfig(() => {
       },
     },
     build: {
-      outDir: 'dist', // Forcem a que es generi a 'dist', que és el que busca GitHub Actions
+      outDir: 'dist',
     },
     server: {
       // HMR is disabled in AI Studio via DISABLE_HMR env var.
