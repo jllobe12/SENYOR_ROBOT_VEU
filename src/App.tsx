@@ -21,13 +21,13 @@ import {
 import robotBg from "./assets/images/robot_books_bg_1783709303606.jpg";
 
 // Helper to generate the exact standalone HTML file requested by the user
-function generateStandaloneHtml(prefilledApiKey: string = "", prefilledText: string = "") {
+function generateStandaloneHtml(prefilledApiKey: string = "", prefilledText: string = "", prefilledStability: number = 0.95) {
   return `<!DOCTYPE html>
 <html lang="ca">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Senyor Robot - Generador de Veu (Standalone Portable)</title>
+  <title>SENYOR ROBOT: DE TEXT A VEU EN CATALÀ (AMB VEU DE ROBOT)</title>
   <!-- Tailwind Play CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
@@ -96,22 +96,21 @@ function generateStandaloneHtml(prefilledApiKey: string = "", prefilledText: str
       
       <!-- App Title -->
       <div class="text-center space-y-2">
-        <div class="inline-flex items-center space-x-2 bg-yellow-100 border-2 border-zinc-900 px-3 py-1 rounded-full text-xs font-black font-mono text-zinc-800 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+        <div class="inline-flex items-center space-x-2 bg-yellow-100 border-2 border-zinc-900 px-3 py-1.5 rounded-full shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
           <div class="flex space-x-0.5 h-3 shrink-0">
-            <div class="w-0.5 bg-yellow-400"></div>
-            <div class="w-0.5 bg-red-600"></div>
-            <div class="w-0.5 bg-yellow-400"></div>
-            <div class="w-0.5 bg-red-600"></div>
-            <div class="w-0.5 bg-yellow-400"></div>
-            <div class="w-0.5 bg-red-600"></div>
-            <div class="w-0.5 bg-yellow-400"></div>
-            <div class="w-0.5 bg-red-600"></div>
-            <div class="w-0.5 bg-yellow-400"></div>
+            <div class="w-1 bg-yellow-400"></div>
+            <div class="w-1 bg-red-600"></div>
+            <div class="w-1 bg-yellow-400"></div>
+            <div class="w-1 bg-red-600"></div>
+            <div class="w-1 bg-yellow-400"></div>
+            <div class="w-1 bg-red-600"></div>
+            <div class="w-1 bg-yellow-400"></div>
+            <div class="w-1 bg-red-600"></div>
+            <div class="w-1 bg-yellow-400"></div>
           </div>
-          <span>CATALÀ ACTIU ⭐⭐⭐⭐</span>
         </div>
-        <h1 class="text-3xl sm:text-4xl font-black tracking-tight text-zinc-900">
-          Senyor Robot <span class="text-[#FF6F3B]">[Veu Clonada]</span>
+        <h1 class="text-2xl sm:text-3xl font-black tracking-tight text-zinc-900 uppercase">
+          SENYOR ROBOT: DE TEXT A VEU EN CATALÀ (AMB VEU DE ROBOT)
         </h1>
         <p class="text-zinc-600 text-sm font-medium">Panell de control de veu connectat directament a ElevenLabs</p>
       </div>
@@ -189,6 +188,28 @@ function generateStandaloneHtml(prefilledApiKey: string = "", prefilledText: str
           class="w-full bg-[#FCFBF9] border-3 border-zinc-900 rounded-2xl p-4 text-sm text-zinc-900 placeholder-zinc-400 focus:outline-none focus:border-[#FF6F3B] transition-all duration-200 resize-none font-medium"
           placeholder="Escriu aquí el que vols que llegeixi el Senyor Robot en català..."
         >${prefilledText}</textarea>
+      </div>
+
+      <!-- Seriositat de la veu slider -->
+      <div class="space-y-2 bg-[#FCFBF9] border-2 border-zinc-950 rounded-2xl p-4 shadow-[3px_3px_0px_0px_rgba(24,24,27,1)]">
+        <div class="flex justify-between items-center text-xs font-bold text-zinc-700 font-mono uppercase tracking-wider">
+          <span class="flex items-center gap-1">⚙️ Seriositat de la veu (Estabilitat)</span>
+          <span id="stability-val" class="bg-[#FF6F3B] text-white px-2.5 py-0.5 rounded border border-zinc-950 font-bold font-mono">${Math.round(prefilledStability * 100)}%</span>
+        </div>
+        <input 
+          type="range" 
+          id="stability" 
+          min="0.3" 
+          max="1.0" 
+          step="0.05" 
+          value="${prefilledStability}" 
+          oninput="document.getElementById('stability-val').textContent = Math.round(this.value * 100) + '%'"
+          class="w-full accent-[#FF6F3B] bg-zinc-200 h-2.5 rounded-lg cursor-pointer"
+        >
+        <div class="flex justify-between text-[10px] text-zinc-500 font-mono font-bold">
+          <span>Menys seriós (Més expressiu)</span>
+          <span>Més seriós (Veu plana/Robòtica)</span>
+        </div>
       </div>
 
       <!-- Error message container -->
@@ -278,6 +299,7 @@ function generateStandaloneHtml(prefilledApiKey: string = "", prefilledText: str
     async function generateVoice() {
       const apiKey = document.getElementById('api-key').value.trim();
       const text = document.getElementById('text').value.trim();
+      const stability = parseFloat(document.getElementById('stability').value) || 0.95;
       
       const generateBtn = document.getElementById('generate-btn');
       const statusText = document.getElementById('status-text');
@@ -321,7 +343,7 @@ function generateStandaloneHtml(prefilledApiKey: string = "", prefilledText: str
             text: text,
             model_id: 'eleven_multilingual_v2',
             voice_settings: {
-              stability: 0.95,
+              stability: stability,
               similarity_boost: 0.35,
               style: 0.0,
               use_speaker_boost: true
@@ -393,8 +415,10 @@ export default function App() {
   const [copiedVoiceId, setCopiedVoiceId] = useState(false);
   const [statusMessage, setStatusMessage] = useState("Llest per a sintetitzar amb Voice ID.");
   const [showAdvanced, setShowAdvanced] = useState(false);
+  const [stability, setStability] = useState(0.95);
   
   const audioPlayerRef = useRef<HTMLAudioElement | null>(null);
+  const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
   const voiceId = "GIQA1VfAzWPvuujOxACW";
   const modelId = "eleven_multilingual_v2";
@@ -419,7 +443,7 @@ export default function App() {
     }
   ];
 
-  // Load API Key from LocalStorage on mount
+  // Load API Key from LocalStorage on mount and focus textarea
   useEffect(() => {
     const savedKey = localStorage.getItem("elevenlabs_api_key");
     if (savedKey) {
@@ -427,6 +451,13 @@ export default function App() {
     } else {
       // Default to the user's provided key
       localStorage.setItem("elevenlabs_api_key", "sk_2f652b2bc47cc8cdaef8440895ef26b787ca691f831b1c61");
+    }
+
+    // Set focus on textarea to show the active writing cursor
+    if (textareaRef.current) {
+      textareaRef.current.focus();
+      const len = textareaRef.current.value.length;
+      textareaRef.current.setSelectionRange(len, len);
     }
   }, []);
 
@@ -466,7 +497,7 @@ export default function App() {
           text: text.trim(),
           model_id: modelId,
           voice_settings: {
-            stability: 0.95,
+            stability: stability,
             similarity_boost: 0.35,
             style: 0.0,
             use_speaker_boost: true
@@ -522,14 +553,14 @@ export default function App() {
   };
 
   const copyCodeToClipboard = () => {
-    const code = generateStandaloneHtml(apiKey, text);
+    const code = generateStandaloneHtml(apiKey, text, stability);
     navigator.clipboard.writeText(code);
     setCopiedCode(true);
     setTimeout(() => setCopiedCode(false), 2000);
   };
 
   const downloadStandaloneHtml = () => {
-    const code = generateStandaloneHtml(apiKey, text);
+    const code = generateStandaloneHtml(apiKey, text, stability);
     const blob = new Blob([code], { type: "text/html" });
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
@@ -592,9 +623,9 @@ export default function App() {
           </div>
         </div>
 
-        {/* Robot Illustration Banner - Espai Intermedi */}
-        <div class="flex justify-center items-center py-2 relative">
-          <div class="max-w-sm w-full border-4 border-zinc-900 rounded-3xl p-3 bg-[#FCF8F2] shadow-[5px_5px_0px_0px_rgba(24,24,27,1)] overflow-hidden">
+        {/* Imatge del robot - Espai Intermedi */}
+        <div class="flex justify-center items-center py-2">
+          <div class="border-4 border-zinc-900 rounded-3xl p-3 bg-white shadow-[4px_4px_0px_0px_rgba(24,24,27,1)] max-w-[240px] overflow-hidden">
             <img 
               src={robotBg} 
               alt="Senyor Robot" 
@@ -672,7 +703,7 @@ export default function App() {
                   
                   <div class="flex justify-between items-center pb-2 border-b border-zinc-200">
                     <span class="text-zinc-500">STABILITY</span>
-                    <span class="text-zinc-800 font-bold">95% (Estabilitat de metall)</span>
+                    <span class="text-zinc-800 font-bold">{Math.round(stability * 100)}% ({stability >= 0.8 ? "Estabilitat de metall" : stability >= 0.5 ? "Equilibrat" : "Més expressiu"})</span>
                   </div>
                   
                   <div class="flex justify-between items-center pb-2 border-b border-zinc-200">
@@ -721,17 +752,36 @@ export default function App() {
               
               {/* Text Area Input */}
               <div class="space-y-3 pt-2">
-                <div class="flex justify-between items-center">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                   <label class="text-sm font-bold text-zinc-900 flex items-center space-x-2">
                     <span class="text-xl">💬</span>
-                    <span>TEXT A SINTETITZAR (CATALÀ)</span>
+                    <span>TEXT A SINTETITZAR</span>
                   </label>
-                  <span class="text-xs font-mono font-bold bg-zinc-100 text-zinc-600 border border-zinc-300 px-2.5 py-1 rounded-md">
+                  <span class="text-xs font-mono font-bold bg-zinc-100 text-zinc-600 border border-zinc-300 px-2.5 py-1 rounded-md self-start sm:self-auto">
                     {text.length} caràcters
                   </span>
                 </div>
+
+                {/* Smaller and compact presets block right next/underneath the label */}
+                <div class="bg-zinc-50 border-2 border-zinc-900 rounded-xl p-3 space-y-2">
+                  <span class="text-[10px] font-black text-zinc-500 uppercase tracking-wider block font-mono">
+                    ⚡ FRASES PREDEFINIDES DEL SENYOR ROBOT (CLICA PER ESCRIURE-LES):
+                  </span>
+                  <div class="flex flex-wrap gap-1.5">
+                    {presets.map((preset, idx) => (
+                      <button
+                        key={idx}
+                        onClick={() => handlePresetSelect(preset.text)}
+                        className="bg-white hover:bg-[#D5EAF4] border border-zinc-900 rounded-lg px-2 py-1 text-[10px] font-bold transition-all duration-150 text-zinc-800 font-mono hover:text-[#FF6F3B] shadow-[1px_1px_0px_0px_rgba(24,24,27,1)] cursor-pointer"
+                      >
+                        {preset.title}
+                      </button>
+                    ))}
+                  </div>
+                </div>
                 
                 <textarea
+                  ref={textareaRef}
                   value={text}
                   onChange={(e) => {
                     setText(e.target.value);
@@ -743,25 +793,6 @@ export default function App() {
                 />
               </div>
 
-              {/* Presets Grid */}
-              <div class="space-y-3">
-                <span class="text-xs font-bold text-zinc-500 uppercase tracking-wider block font-mono">
-                  ⚡ FRASES PREDEFINIDES DEL SENYOR ROBOT:
-                </span>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  {presets.map((preset, idx) => (
-                    <button
-                      key={idx}
-                      onClick={() => handlePresetSelect(preset.text)}
-                      className="bg-[#EAF4F9] hover:bg-[#D5EAF4] border-2 border-zinc-900 rounded-xl px-4 py-3 text-left text-xs font-bold transition-all duration-150 text-zinc-800 font-mono hover:text-[#FF6F3B] hover:shadow-[2px_2px_0px_0px_rgba(24,24,27,1)] truncate flex items-center space-x-1.5 cursor-pointer"
-                    >
-                      <span class="text-[#FF6F3B] font-extrabold">&gt;</span>
-                      <span class="truncate">{preset.title}...</span>
-                    </button>
-                  ))}
-                </div>
-              </div>
-
               {/* Error Box */}
               {error && (
                 <div class="bg-red-50 border-2 border-red-900 rounded-2xl p-4 text-red-900 text-xs flex items-start space-x-2.5 font-mono font-bold">
@@ -770,6 +801,22 @@ export default function App() {
                     <span class="font-black uppercase block mb-0.5">Error de Laboratori</span>
                     <span>{error}</span>
                   </div>
+                </div>
+              )}
+
+              {/* Native Audio element wrapper - ara a sobre del botó */}
+              {audioUrl && (
+                <div class="pb-4 mb-4 border-b-2 border-dashed border-zinc-200 space-y-3">
+                  <span class="text-xs font-mono text-zinc-500 uppercase tracking-widest block text-center font-bold">
+                    REPRODUCTOR DE VEU SINTÈTICA
+                  </span>
+                  <audio
+                    ref={audioPlayerRef}
+                    src={audioUrl}
+                    controls
+                    className="w-full bg-[#FAF6F0] border-2 border-zinc-900 rounded-xl p-1 text-zinc-900"
+                    id="audio-synth"
+                  />
                 </div>
               )}
 
@@ -820,26 +867,35 @@ export default function App() {
                 ) : (
                   <>
                     <Volume2 class="w-5 h-5 text-white" />
-                    <span>SINTETITZAR I REPRODUIR VEU (CATALÀ)</span>
+                    <span>SINTETITZAR I REPRODUIR VEU</span>
                   </>
                 )}
               </button>
 
-              {/* Native Audio element wrapper */}
-              {audioUrl && (
-                <div class="pt-4 border-t-2 border-dashed border-zinc-200 space-y-3">
-                  <span class="text-xs font-mono text-zinc-500 uppercase tracking-widest block text-center font-bold">
-                    REPRODUCTOR DE VEU SINTÈTICA
+              {/* Seriositat de la veu slider (molt més senzill i petit a sota del botó) */}
+              <div class="p-2 mt-2 space-y-1 relative max-w-sm mx-auto w-full">
+                <div class="flex justify-between items-center text-[10px] font-mono font-bold text-zinc-500">
+                  <span class="flex items-center gap-1">⚙️ Seriositat de la veu:</span>
+                  <span class="bg-[#FF6F3B]/10 text-[#FF6F3B] px-1.5 py-0.5 rounded font-black text-[9px] border border-[#FF6F3B]/20">
+                    {Math.round(stability * 100)}%
                   </span>
-                  <audio
-                    ref={audioPlayerRef}
-                    src={audioUrl}
-                    controls
-                    className="w-full bg-[#FAF6F0] border-2 border-zinc-900 rounded-xl p-1 text-zinc-900"
-                    id="audio-synth"
-                  />
                 </div>
-              )}
+                
+                <input
+                  type="range"
+                  min="0.3"
+                  max="1.0"
+                  step="0.05"
+                  value={stability}
+                  onChange={(e) => setStability(parseFloat(e.target.value))}
+                  className="w-full accent-[#FF6F3B] bg-zinc-200 h-1 rounded cursor-pointer"
+                />
+                
+                <div class="flex justify-between text-[8px] font-mono font-bold text-zinc-400">
+                  <span>Més expressiu</span>
+                  <span>Més seriós (Robòtic)</span>
+                </div>
+              </div>
 
             </div>
 
@@ -847,70 +903,7 @@ export default function App() {
 
         </div>
 
-        {/* Dynamic HTML Standalone Exporter Widget */}
-        <div class="bg-white border-4 border-zinc-900 rounded-3xl p-6 sm:p-8 space-y-4 shadow-[6px_6px_0px_0px_#18181b] relative overflow-hidden">
-          {/* Subtle Catalan flag ribbon at the top margin */}
-          <div class="absolute top-0 left-0 right-0 h-1.5 flex">
-            <div class="flex-1 bg-yellow-400"></div>
-            <div class="flex-1 bg-red-600"></div>
-            <div class="flex-1 bg-yellow-400"></div>
-            <div class="flex-1 bg-red-600"></div>
-            <div class="flex-1 bg-yellow-400"></div>
-            <div class="flex-1 bg-red-600"></div>
-          </div>
 
-          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b-2 border-zinc-100">
-            <div class="flex items-center space-x-2 text-zinc-900 font-bold text-sm uppercase">
-              <Code class="w-4 h-4 text-[#FF6F3B]" />
-              <span>Descarregar Clonador autònom (.html)</span>
-            </div>
-            
-            <span class="bg-amber-100 text-[#FF6F3B] border-2 border-zinc-900 text-[10px] px-2.5 py-1 rounded-full font-mono font-bold shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
-              STANDALONE PORTABLE ⭐⭐⭐
-            </span>
-          </div>
-
-          <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 text-sm">
-            <p class="text-zinc-600 leading-relaxed max-w-2xl font-medium">
-              Aquest laboratori d'aprenentatge ve amb un botó d'exportació recursiva. Pots obtenir un fitxer <code class="text-zinc-950 font-bold bg-zinc-100 px-1 rounded border border-zinc-200">index.html</code> autònom, que conté l'estil toriyamesc, l'estètica de la Senyera, els estils integrats i tota la lògica necessària per obrir-lo localment amb un doble clic!
-            </p>
-            
-            <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 shrink-0">
-              {/* Copy Code button */}
-              <button
-                onClick={copyCodeToClipboard}
-                className="bg-white hover:bg-zinc-50 text-zinc-800 border-2 border-zinc-900 rounded-xl px-4 py-3 text-xs font-mono font-bold shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] active:translate-y-0.5 active:translate-x-0.5 active:shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] transition-all flex items-center justify-center space-x-1.5 cursor-pointer"
-                title="Copiar codi HTML complet"
-              >
-                {copiedCode ? (
-                  <>
-                    <Check class="w-4 h-4 text-green-600" />
-                    <span class="text-green-600 font-bold">COPIAT!</span>
-                  </>
-                ) : (
-                  <>
-                    <Clipboard class="w-4 h-4 text-zinc-700" />
-                    <span>COPIAR CODI HTML</span>
-                  </>
-                )}
-              </button>
-
-              {/* Download File Button */}
-              <button
-                onClick={downloadStandaloneHtml}
-                className="bg-[#4895EF] hover:bg-[#3f81d1] text-white border-2 border-zinc-900 rounded-xl px-4 py-3 text-xs font-mono font-bold shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] active:translate-y-0.5 active:translate-x-0.5 active:shadow-[1px_1px_0px_0px_rgba(0,0,0,1)] transition-all flex items-center justify-center space-x-1.5 cursor-pointer"
-                title="Descarregar fitxer index.html"
-              >
-                <Download class="w-4 h-4 text-white" />
-                <span>DESCARREGAR .HTML</span>
-              </button>
-            </div>
-          </div>
-          
-          <div class="text-[11px] text-zinc-500 leading-relaxed font-mono bg-amber-50/50 p-3 rounded-xl border border-amber-100">
-            * <span class="text-zinc-700 font-bold">Avís d'exportació:</span> Com que la clau de l'API d'ElevenLabs està integrada en aquest entorn, el document descarregat ja anirà <span class="text-[#FF6F3B] font-bold">pre-activat</span> amb les credencials del vostre professor perquè els alumnes el facin servir lliurement!
-          </div>
-        </div>
 
       </div>
 
