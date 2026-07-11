@@ -624,8 +624,8 @@ export default function App() {
         </div>
 
         {/* Imatge del robot - Espai Intermedi */}
-        <div class="flex justify-center items-center py-2">
-          <div class="border-4 border-zinc-900 rounded-3xl p-3 bg-white shadow-[4px_4px_0px_0px_rgba(24,24,27,1)] max-w-[240px] overflow-hidden">
+        <div class="flex justify-center items-center py-4">
+          <div class="border-4 border-zinc-900 rounded-3xl p-4 bg-white shadow-[6px_6px_0px_0px_rgba(24,24,27,1)] max-w-[340px] overflow-hidden">
             <img 
               src={robotBg} 
               alt="Senyor Robot" 
@@ -762,17 +762,17 @@ export default function App() {
                   </span>
                 </div>
 
-                {/* Smaller and compact presets block right next/underneath the label */}
-                <div class="bg-zinc-50 border-2 border-zinc-900 rounded-xl p-3 space-y-2">
-                  <span class="text-[10px] font-black text-zinc-500 uppercase tracking-wider block font-mono">
+                {/* Presets block - enlarged layout */}
+                <div class="bg-zinc-50 border-2 border-zinc-900 rounded-2xl p-4.5 space-y-3 shadow-inner">
+                  <span class="text-xs font-black text-zinc-600 uppercase tracking-wider block font-mono">
                     ⚡ FRASES PREDEFINIDES DEL SENYOR ROBOT (CLICA PER ESCRIURE-LES):
                   </span>
-                  <div class="flex flex-wrap gap-1.5">
+                  <div class="flex flex-wrap gap-2">
                     {presets.map((preset, idx) => (
                       <button
                         key={idx}
                         onClick={() => handlePresetSelect(preset.text)}
-                        className="bg-white hover:bg-[#D5EAF4] border border-zinc-900 rounded-lg px-2 py-1 text-[10px] font-bold transition-all duration-150 text-zinc-800 font-mono hover:text-[#FF6F3B] shadow-[1px_1px_0px_0px_rgba(24,24,27,1)] cursor-pointer"
+                        className="bg-white hover:bg-[#D5EAF4] border-2 border-zinc-900 rounded-lg px-2.5 py-1.5 text-[11px] font-bold transition-all duration-150 text-zinc-800 font-mono hover:text-[#FF6F3B] shadow-[2px_2px_0px_0px_rgba(24,24,27,1)] hover:shadow-[1px_1px_0px_0px_rgba(24,24,27,1)] active:translate-y-0.5 cursor-pointer"
                       >
                         {preset.title}
                       </button>
@@ -872,11 +872,11 @@ export default function App() {
                 )}
               </button>
 
-              {/* Seriositat de la veu slider (molt més senzill i petit a sota del botó) */}
-              <div class="p-2 mt-2 space-y-1 relative max-w-sm mx-auto w-full">
-                <div class="flex justify-between items-center text-[10px] font-mono font-bold text-zinc-500">
-                  <span class="flex items-center gap-1">⚙️ Seriositat de la veu:</span>
-                  <span class="bg-[#FF6F3B]/10 text-[#FF6F3B] px-1.5 py-0.5 rounded font-black text-[9px] border border-[#FF6F3B]/20">
+              {/* Seriositat de la veu slider (més gran i còmode) */}
+              <div class="bg-[#FCFBF9] border-2 border-zinc-900 rounded-xl p-4 mt-4 space-y-2.5 relative max-w-md mx-auto w-full shadow-[2px_2px_0px_0px_rgba(24,24,27,1)]">
+                <div class="flex justify-between items-center text-xs font-mono font-bold text-zinc-700">
+                  <span class="flex items-center gap-1.5">⚙️ Seriositat de la veu (Estabilitat):</span>
+                  <span class="bg-[#FF6F3B]/10 text-[#FF6F3B] px-2 py-0.5 rounded border border-[#FF6F3B]/20 font-black text-xs">
                     {Math.round(stability * 100)}%
                   </span>
                 </div>
@@ -888,10 +888,10 @@ export default function App() {
                   step="0.05"
                   value={stability}
                   onChange={(e) => setStability(parseFloat(e.target.value))}
-                  className="w-full accent-[#FF6F3B] bg-zinc-200 h-1 rounded cursor-pointer"
+                  className="w-full accent-[#FF6F3B] bg-zinc-200 h-2 rounded cursor-pointer"
                 />
                 
-                <div class="flex justify-between text-[8px] font-mono font-bold text-zinc-400">
+                <div class="flex justify-between text-[10px] font-mono font-bold text-zinc-500">
                   <span>Més expressiu</span>
                   <span>Més seriós (Robòtic)</span>
                 </div>
@@ -903,7 +903,12 @@ export default function App() {
 
         </div>
 
-
+        {/* Nota subtil al peu */}
+        <div class="mt-8 text-center max-w-xl mx-auto px-4 pb-6">
+          <p class="text-[10px] text-zinc-500 font-mono font-medium leading-relaxed">
+            ℹ️ <strong>Nota del laboratori:</strong> Actualment s'està utilitzant la versió <strong>v2 d'ElevenLabs</strong>, i no la v3 (que és la que ofereix una millor expressivitat i naturalitat en català). El programa s'actualitzarà automàticament per incorporar la v3 tan bon punt estigui disponible l'accés.
+          </p>
+        </div>
 
       </div>
 
