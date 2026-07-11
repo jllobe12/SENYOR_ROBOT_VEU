@@ -18,7 +18,7 @@
 
 ### ⚙️ Com funciona?
 - **Text:** Escriu un text o tria una de les frases predefinides.
-- **Ajust:** Controla la seriositat per fer-lo més o menys expressiu o robòtic.
+- **Ajust:** Controla la seriositat per fer-lo més expressiu o robòtic.
 - **Veu:** Sintetitza la veu per escoltar-la i descarregar-la a l'instant.
 
 ---
