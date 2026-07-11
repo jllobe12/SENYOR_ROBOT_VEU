@@ -1,42 +1,35 @@
-# 🤖 El Senyor Robot — Laboratori de Veu en Català
+<div align="center">
 
-Benvingut/da al **Senyor Robot**, un laboratori interactiu de síntesi de veu dissenyat específicament per convertir qualsevol text escrit en català en veu de robot de forma instantània.
+# 🤖 El Senyor Robot
 
-Aquesta aplicació utilitza tecnologia de síntesi de veu avançada per apropar les tecnologies d'intel·ligència artificial i processament de veu a l'aula i a la comunitat educativa d'una manera intuïtiva, divertida i atractiva.
+<img src="./src/assets/images/robot_books_bg_1783709303606.jpg" width="220" style="border-radius: 20px; border: 3px solid #18181b;" />
 
----
+<h3>Laboratori de Veu en Català</h3>
 
-## 🛠️ Com funciona la web?
+<p>Converteix text en català a veu de robot de forma instantània.</p>
 
-El funcionament és molt senzill i està dissenyat en tres senzills passos interactius:
+<a href="https://jllobe12.github.io/SENYOR_ROBOT_VEU/" target="_blank" style="background-color: #FF6F3B; color: white; padding: 12px 24px; border-radius: 12px; font-weight: bold; text-decoration: none; display: inline-block; margin: 15px 0; border: 2px solid #18181b; box-shadow: 4px 4px 0px 0px #18181b;">
+  🌐 VISITAR LA WEB
+</a>
 
-1. **Escriu o tria el teu text:**
-   - Pots escriure qualsevol paraula o frase en català directament dins de la bústia de text principal de la pantalla.
-   - Si ho prefereixes, pots fer clic sobre qualsevol de les **Frases predefinides del Senyor Robot** per omplir el quadre de text a l'instant amb expressions habituals.
-
-2. **Ajusta la personalitat (Seriositat de la veu):**
-   - Utilitza el control lliscant per triar el nivell de **Seriositat de la veu (Estabilitat)**.
-   - Un valor més baix farà que la veu sigui més expressiva, canviant i dinàmica.
-   - Un valor més alt oferirà un to més seriós, ferm, pla i purament robòtic.
-
-3. **Sintetitza i escolta:**
-   - Prem el botó gran de color taronja **"SINTETITZA LA VEU DEL ROBOT!"**.
-   - El sistema connectarà de manera segura amb els servidors de veu i en pocs segons apareixerà un reproductor de veu sintètica perquè la puguis escoltar i descarregar si ho desitges.
+</div>
 
 ---
 
-## ℹ️ Nota sobre la versió de síntesi
-
-Actualment, el laboratori està utilitzant la versió **v2 d'ElevenLabs**. Tot i que la versió v3 és la que funciona amb millor expressivitat en català, l'aplicació s'actualitzarà automàticament per implementar aquesta nova versió tan bon punt estigui disponible la seva incorporació tècnica.
-
----
-
-## 🌐 Més recursos educatius i tecnològics
-
-Per descobrir més eines educatives, projectes i materials d'aprenentatge tecnològic, et convidem a visitar el lloc web oficial de recursos:
-
-👉 **[Recursostecno — Sites de Google](https://sites.google.com/xtec.cat/recursostecno)**
+### ⚙️ Com funciona?
+- **Text:** Escriu un text o tria una de les frases predefinides.
+- **Ajust:** Controla la seriositat per fer-lo més expressiu o robòtic.
+- **Veu:** Sintetitza la veu per escoltar-la i descarregar-la a l'instant.
 
 ---
 
-*Creat amb ❤️ per a la comunitat educativa i els amants de la tecnologia.*
+### 🌐 Recursos i enllaços d'interès
+
+<div align="center">
+  <a href="https://sites.google.com/xtec.cat/recursostecno" target="_blank">
+    <img src="./src/assets/images/recursos_tecno_1783798851001.jpg" width="100" style="display: block; margin-bottom: 8px;" />
+  </a>
+  <a href="https://sites.google.com/xtec.cat/recursostecno" target="_blank" style="font-weight: bold; color: #FF6F3B; text-decoration: none; font-size: 15px;">
+    Visita Recursos Tecno
+  </a>
+</div>
